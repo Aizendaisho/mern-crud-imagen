@@ -4,8 +4,11 @@ const { MONGO_PORT } = require("../config.js");
 
 const dbConect = async () => {
   try {
-    await mongoose.connect(MONGO_PORT);
-    console.log("se conecto a la base de datos");
+   const db = await mongoose.connect(MONGO_PORT);
+
+   await console.log(
+     `se conecto a la base de datos llamada ${db.connection.name}`
+   );
   } catch (error) {
     console.log(error.message);
   }
