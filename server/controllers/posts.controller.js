@@ -1,22 +1,54 @@
-const getPosts = (req, res) => {
-  res.status(200).send("desde routes posts controllers");
+const Post = require("../models/posts.js");
+
+const getPosts = async (req, res) => {
+  try {
+    const result = await Post.find();
+    res.send(result);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 };
 
-const createPosts = (req, res) => {
-  res.status(200).send("desde routes posts create controllers");
+const createPosts = async (req, res) => {
+  try {
+    const newPost = await new Post(req.body);
+    await newPost.save();
+    res.status(201).send("se ha publicado su post");
+  } catch (error) {
+    res.status(500).send(error);
+  }
 };
 
-const updatePosts = (req, res) => {
-  res.status(200).send("desde routes posts update controllers");
-};
-
-const deletePosts = (req, res) => {
-  res.status(200).send("desde routes posts delete controllers");
-};
-
-const onePost = (req, res) => {
+const updatePosts = async (req, res) => {
   const { id } = req.params;
-  res.status(200).send(`desde routes posts controllers tu id es ${id}`);
+  try {
+    const postUpdate = await Post.findByIdAndUpdate({ _id: id }, req.body, {
+      new: true,
+    });
+    res.status(201).send(postUpdate);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+const deletePosts = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Post.findByIdAndDelete(id);
+    res.send("se ha borrado su post");
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+const onePost = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const post = await Post.findById({ _id: id });
+    res.send(post);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 };
 
 module.exports = { getPosts, createPosts, updatePosts, deletePosts, onePost };

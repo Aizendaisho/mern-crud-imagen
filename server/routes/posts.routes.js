@@ -7,9 +7,9 @@ router.get("/posts", getPosts);
 
 router.post("/posts", createPosts);
 
-router.put("/posts", updatePosts);
+router.put("/posts/:id", updatePosts);
 
-router.delete("/posts", deletePosts);
+router.delete("/posts/:id", deletePosts);
 
 router.get("/posts/:id", onePost);
 
