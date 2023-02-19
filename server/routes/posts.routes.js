@@ -3,7 +3,7 @@ const { createPosts, getPosts, updatePosts, deletePosts, onePost } = require("..
 
 const router = express.Router();
 
-router.get("/posts", getPosts);
+router.get("/posts", getPosts); 
 
 router.post("/posts", createPosts);
 
