@@ -16,10 +16,21 @@ export default function SinglePost() {
 
   return (
     <div>
-      <img src={data?.image?.url} alt={data?.title} />
-      <h2>{data?.title}</h2>
-      <h2>{data?.description}</h2>
-      <button onClick={() => deletePost(data._id)}>borrar</button>
+      <div className="hero min-h-screen bg-base-200">
+        <div className="hero-content flex-col lg:flex-row">
+          <img
+            src={data?.image?.url}
+            alt={data?.title}
+            className="max-w-sm rounded-lg shadow-2xl"
+          />
+          <div>
+            <h1 className="text-5xl font-bold">{data?.title}</h1>
+            <p className="py-6">{data?.description}</p>
+
+            <button onClick={() => deletePost(data._id)}>borrar</button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

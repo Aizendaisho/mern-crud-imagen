@@ -1,8 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "../page/Home";
-import AddPosts from "../page/AddPosts";
-import SinglePost from "../page/SinglePost";
+import { AddPosts, Home, SinglePost } from "../page/index";
 
 export default function AppRoutes() {
   return (
