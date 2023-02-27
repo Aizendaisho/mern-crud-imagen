@@ -6,7 +6,15 @@ const getPosts = () => {
   return axiosPost.get("/posts");
 };
 
-export const createPost = (post: Posts) => axiosPost.post("/posts", post);
+export const createPost = (post: any) => {
+  const form = new FormData();
+  for (let key in post) {
+    form.append(key, post[key]);
+  }
+  return axiosPost.post("/posts", form, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+};
 
 export const useApicall = () => {
   return useQuery(["posts"], getPosts, {
@@ -16,8 +24,8 @@ export const useApicall = () => {
   });
 };
 
-const getOnePostAxios = (id: string) => {
-  return axiosPost.get(`/posts/${id}`);
+export const getOnePostAxios = async (id: string) => {
+  return await axiosPost.get(`/posts/${id}`);
 };
 export const getOnePost = (id: string) => {
   return useQuery(["post", id], () => getOnePostAxios(id), {
@@ -26,7 +34,6 @@ export const getOnePost = (id: string) => {
     },
   });
 };
-
 
 
 
