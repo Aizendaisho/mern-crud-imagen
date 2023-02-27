@@ -13,21 +13,26 @@ const getPosts = async (req, res) => {
 
 const createPosts = async (req, res) => {
   let image;
+
+  const { title, description } = req.body;
   try {
-    if (req.files.image) {
+    if (req.files?.image) {
       const result = await imageUploader(req.files.image.tempFilePath);
       await fsExtra.remove(req.files.image.tempFilePath);
       image = {
         url: result.secure_url,
         public_id: result.public_id,
       };
+      const newPost = new Post({ title, description, image });
+      await newPost.save();
+      return res.status(201).send("se ha publicado su post con imagen");
     }
-    const newPost = await new Post({ ...req.body, image });
+    const newPost = new Post({ title, description });
     await newPost.save();
-    return res.status(201).send("se ha publicado su post");
+    return res.status(201).send("se ha publicado su post sin imagen");
   } catch (error) {
     console.log(error);
-    res.status(500).send(error);
+    res.status(400).json(error);
   }
 };
 

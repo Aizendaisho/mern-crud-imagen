@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
   const { data } = useApicall();
-  console.log(data);
   return (
     <div className="container">
       <Link to="/addpost">Nuevo Post</Link>
